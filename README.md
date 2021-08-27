@@ -38,4 +38,4 @@ This example also includes two example inputs for both tasks in the process, cal
 
 ## Control room setup
 
-To see how to set up Control Room and understand more about how work items are used, see the following article: (Using work items)(https://robocorp.com/docs/development-guide/control-room/data-pipeline).
+To see how to set up Control Room and understand more about how work items are used, see the following article: [Using work items](https://robocorp.com/docs/development-guide/control-room/data-pipeline).
