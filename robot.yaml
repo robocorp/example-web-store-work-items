@@ -1,0 +1,12 @@
+tasks:
+  Split orders file:
+    robotTaskName: Split orders file
+  Process order:
+    robotTaskName: Process order
+
+artifactsDir: output
+condaConfigFile: conda.yaml
+ignoreFiles: [.gitignore]
+
+PATH: [.]
+PYTHONPATH: [.]
