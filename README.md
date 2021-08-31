@@ -130,7 +130,7 @@ In local development, a JSON file is generated for the output. This is the conte
 ]
 ```
 
-Each `payload` section in the generated output JSON file corresponds to one work item.
+Each section having the `payload` and `files` attributes in the generated output JSON file corresponds to one work item.
 
 ## Control room setup
 
