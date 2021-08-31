@@ -28,7 +28,7 @@ The robot is split into two tasks, meant to be run as separate steps. The first 
 
 ## Excel input file
 
-The first task expects an [Excel file](./devdata/orders.xlsx) in a specific format:
+The first task expects an [Excel file](devdata/orders.xlsx) in a specific format:
 
 | Name          | Item                     | Zip  |
 | ------------- | ------------------------ | ---- |
