@@ -1,12 +1,10 @@
 [
     {
         "payload": {
-            "variables": {
-                "products": [
-                    {"Name": "Gregg Arroyo", "Item": "Sauce Labs Onesie", "Zip": 4418},
-                    {"Name": "Gregg Arroyo", "Item": "Sauce Labs Bolt T-Shirt", "Zip": 4418}
-                ]
-            }
+            "products": [
+                {"Name": "Gregg Arroyo", "Item": "Sauce Labs Onesie", "Zip": 4418},
+                {"Name": "Gregg Arroyo", "Item": "Sauce Labs Bolt T-Shirt", "Zip": 4418}
+            ]
         }
     }
 ]

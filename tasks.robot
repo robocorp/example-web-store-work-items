@@ -21,6 +21,7 @@ Split orders file
         Save work item
     END
 
+*** Tasks ***
 Process order
     [Documentation]    Order all products in input item
     ${rows}=    Get work item variable    products
