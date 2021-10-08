@@ -8,26 +8,17 @@ Resource          SwagLabs.robot
 ${ORDER_FILE_NAME}=    orders.xlsx
 
 *** Keywords ***
-Process order
+Load and Process Order
     [Documentation]    Order all products in one work item products list
     ${payload}=    Get Work Item Payload
-    Log    ${payload}
-    ${rows}=    Set Variable    ${payload}[${products}]
-    Log    ${rows}
+    ${rows}=    Set Variable    ${payload}[products]
     ${products}=    Create table    ${rows}
-    Open Swag Labs
-    Wait until keyword succeeds    3x    1s    Login
-    Process order    ${products}
-
-Process Work Item
-    ${status}    ${return}    Run Keyword And Ignore Error    Process order
-    IF    "${status}" == "FAIL"
-        Log
-        ...    Process order error: ${return}
-        ...    level=ERROR
-        Release input work item    FAILED
-    ELSE
+    ${passed}   Run Keyword And Return Status    Process order    ${products}
+    IF     ${passed}
         Release input work item    DONE
+    ELSE
+        Log    Order prosessing failed for: ${rows}   level=ERROR
+        Release input work item    FAILED
     END
 
 *** Tasks ***
@@ -45,7 +36,9 @@ Split orders file
     END
 
 *** Tasks ***
-Process order
+Load and Process All Orders
     [Documentation]    Order all products in input item queue
-    For each input work item    Process Work Item
+    Open Swag Labs
+    Wait until keyword succeeds    3x    1s    Login
+    For each input work item    Load and Process Order
     [Teardown]    Close browser

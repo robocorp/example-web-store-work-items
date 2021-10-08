@@ -1,8 +1,8 @@
 tasks:
   Split orders file:
     robotTaskName: Split orders file
-  Process order:
-    robotTaskName: Process order
+  Load and Process All Orders:
+    robotTaskName: Load and Process All Orders
 
 artifactsDir: output
 condaConfigFile: conda.yaml
