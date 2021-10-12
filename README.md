@@ -61,7 +61,7 @@ Using VsCode, you should only need [this guide](https://robocorp.com/docs/develo
 
 As each task in the robot expects different work item input, we need a way to control this.
 
-This example includes two example test inputs, one for each task in the process:
+This example includes test inputs, one for each task in the process:
 - For task `Split orders file`:
   - `./devdata/work-items-in/split-orders-file-test-input/work-items.json`
 - For task `Load and Process All Orders`:
@@ -72,7 +72,9 @@ The `RPA.Robocorp.WorkItems` library can be controlled with specific environment
 - [`env-process-orders.json`](./devdata/env-process-orders.json): Points to the input for task `Load and Process All Orders`
 - [`env-split-orders.json`](./devdata/env-split-orders.json): Points to the input for task `Split orders file`
 
-To control the used environment file in the command-line or Robocorp Lab Terminal you can run the following commands:
+By default the `env.json` is used by Robocorp Lab so the inputs and output paths defined there decide which input is used. You can edit that file change what you are testing.
+
+To run specific tasks with specific inputs in the command-line or Robocorp Lab Terminal you can run the following commands:
 - Run `Split orders file` with test input:
   - `rcc task run -t "Split orders file" -e ./devdata/env-split-orders.json`
 - Run `Load and Process All Orders` with test input:
