@@ -8,9 +8,11 @@ The robot demonstrates the Work Items feature of Robocorp Control Room:
 - Passing data and files between process steps
 - Parallel execution of steps
 
+> We recommended checking out the article "[Using work items](https://robocorp.com/docs/development-guide/control-room/data-pipeline)" before diving in.
+
 ## Tasks
 
-The robot is split into two tasks, meant to be run as separate steps. The first task generates (produces) data, and the second one reads (consumes) and processes that data.
+The robot is split into two tasks, meant to run as separate steps. The first task generates (produces) data, and the second one reads (consumes) and processes that data.
 
 > [Producer-consumer](https://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem), Wikipedia.
 
@@ -22,8 +24,9 @@ The robot is split into two tasks, meant to be run as separate steps. The first 
 
 ### The second task (the consumer)
 
-- Reads the products in the order from the work item
 - Logs in to the web store
+- Reads the products in the order from the work item
+  - Loops through work items to avoid time spent logging in per each work item.
 - Orders the products
 
 ## Excel input file
@@ -42,95 +45,40 @@ The first task expects an [Excel file](https://github.com/robocorp/example-web-s
 | Sol Heaton    | Sauce Labs Fleece Jacket | 3695 |
 | Sol Heaton    | Sauce Labs Onesee        | 3695 |
 
-## Local development
+# Local development
 
-When running in **Control Room**, the work items will be automatically managed and passed between steps in the process. However, when running locally, the work items can be simulated using a JSON-based file.
+When running in **Control Room**, the work items will be automatically managed and passed between steps in the process. However, when running locally, the work items can be simulated using folder structure and JSON files.
 
-The `RPA.Robocorp.WorkItems` library can be controlled with specific environment variables, as seen in the [`env.json`](./devdata/env.json) file.
+## VsCode
+[Robocorp VsCode extensions](https://robocorp.com/docs/developer-tools/visual-studio-code/overview) has built-in support making the use and testing of work items more straightforward.
 
-This example also includes two example inputs for both tasks in the process, called [`items1.json`](./devdata/items1.json) and [`items2.json`](./devdata/items2.json). Depending on which task is being developed, different work item files can be used for development purposes.
+> Note: This requires the use of [rpaframework v11.4.0](https://rpaframework.org/releasenotes.html) or later in your robot.
 
-In local development, a JSON file is generated for the output. This is the contents of the `items1.output.json` output file after running the first task that groups the products by customer:
+Using VsCode, you should only need [this guide](https://robocorp.com/docs/developer-tools/visual-studio-code/extension-features#using-work-items)
 
-```json
-[
-  {
-    "payload": {
-      "products": [
-        {
-          "Name": "Camden Martin",
-          "Item": "Sauce Labs Bolt T-Shirt",
-          "Zip": 1196
-        }
-      ]
-    },
-    "files": {}
-  },
-  {
-    "payload": {
-      "products": [
-        {
-          "Name": "Gregg Arroyo",
-          "Item": "Sauce Labs Onesie",
-          "Zip": 4418
-        },
-        {
-          "Name": "Gregg Arroyo",
-          "Item": "Sauce Labs Bolt T-Shirt",
-          "Zip": 4418
-        }
-      ]
-    },
-    "files": {}
-  },
-  {
-    "payload": {
-      "products": [
-        {
-          "Name": "Sol Heaton",
-          "Item": "Sauce Labs Bolt T-Shirt",
-          "Zip": 3695
-        },
-        {
-          "Name": "Sol Heaton",
-          "Item": "Sauce Labs Fleece Jacket",
-          "Zip": 3695
-        },
-        {
-          "Name": "Sol Heaton",
-          "Item": "Sauce Labs Onesee",
-          "Zip": 3695
-        }
-      ]
-    },
-    "files": {}
-  },
-  {
-    "payload": {
-      "products": [
-        {
-          "Name": "Zoya Roche",
-          "Item": "Sauce Labs Bolt T-Shirt",
-          "Zip": 3013
-        },
-        {
-          "Name": "Zoya Roche",
-          "Item": "Sauce Labs Fleece Jacket",
-          "Zip": 3013
-        },
-        {
-          "Name": "Zoya Roche",
-          "Item": "Sauce Labs Onesie",
-          "Zip": 3013
-        }
-      ]
-    },
-    "files": {}
-  }
-]
-```
 
-Each section having the `payload` and `files` attributes in the generated output JSON file corresponds to one work item.
+## Robocorp Lab and RCC from CLI
+
+As each task in the robot expects different work item input, we need a way to control this.
+
+This example includes test inputs, one for each task in the process:
+- For task `Split orders file`:
+  - `./devdata/work-items-in/split-orders-file-test-input/work-items.json`
+- For task `Load and Process All Orders`:
+  - `./devdata/work-items-in/process-orders-test-from-outputs/work-items.json`
+
+The `RPA.Robocorp.WorkItems` library can be controlled with specific environment variables to control the input and output sources. In this example under `./devdata` you can find three different JSON files that demonstrate the selection:
+- [`env.json`](./devdata/env.json): This is used as default by Robocorp Lab and RCC command-line and points to the input for task `Split orders file`
+- [`env-process-orders.json`](./devdata/env-process-orders.json): Points to the input for task `Load and Process All Orders`
+- [`env-split-orders.json`](./devdata/env-split-orders.json): Points to the input for task `Split orders file`
+
+By default the `env.json` is used by Robocorp Lab so the inputs and output paths defined there decide which input is used. You can edit that file change what you are testing.
+
+To run specific tasks with specific inputs in the command-line or Robocorp Lab Terminal you can run the following commands:
+- Run `Split orders file` with test input:
+  - `rcc task run -t "Split orders file" -e ./devdata/env-split-orders.json`
+- Run `Load and Process All Orders` with test input:
+  - `rcc task run -t "Load and Process All Orders" -e ./devdata/env-process-orders.json`
 
 ## Control room setup
 

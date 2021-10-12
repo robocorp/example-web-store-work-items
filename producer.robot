@@ -2,7 +2,7 @@
 Library           RPA.Robocorp.WorkItems
 Library           RPA.Excel.Files
 Library           RPA.Tables
-Resource          SwagLabs.robot
+Library            Collections
 
 *** Variables ***
 ${ORDER_FILE_NAME}=    orders.xlsx
@@ -15,18 +15,16 @@ Split orders file
     ${table}=    Read worksheet as table    header=True
     ${groups}=    Group table by column    ${table}    Name
     FOR    ${products}    IN    @{groups}
-        Create output work item
+        Create Output Work Item
         ${rows}=    Export table    ${products}
-        Set work item variable    products    ${rows}
-        Save work item
+        @{items}=    Create List
+        FOR    ${row}    IN    @{rows}
+            ${name}=    Set Variable     ${row}[Name]
+            ${zip}=    Set Variable     ${row}[Zip]
+            Append To List    ${items}   ${row}[Item]
+        END
+        Set work item variable    Name    ${name}
+        Set work item variable    Zip    ${zip}
+        Set work item variable    Items    ${items}
+        Save Work Item
     END
-
-*** Tasks ***
-Process order
-    [Documentation]    Order all products in input item
-    ${rows}=    Get work item variable    products
-    ${products}=    Create table    ${rows}
-    Open Swag Labs
-    Wait until keyword succeeds    3x    1s    Login
-    Process order    ${products}
-    [Teardown]    Close browser

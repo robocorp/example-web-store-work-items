@@ -6,13 +6,11 @@ temp/
 .ipynb_checkpoints/
 */.ipynb_checkpoints/*
 .virtual_documents/
+*/.virtual_documents/*
 .vscode
 .DS_Store
 *.pyc
 *.zip
-.virtual_documents/
-*/.virtual_documents/*
+*/work-items-out/*
 testrun/*
 .~lock*
-orders.xlsx
-*output.json
