@@ -1,73 +1,45 @@
 [
     {
         "payload": {
-            "products": [
-                {
-                    "Name": "Zoya Roche",
-                    "Item": "Sauce Labs Bolt T-Shirt",
-                    "Zip": 3013
-                },
-                {
-                    "Name": "Zoya Roche",
-                    "Item": "Sauce Labs Fleece Jacket",
-                    "Zip": 3013
-                },
-                {
-                    "Name": "Zoya Roche",
-                    "Item": "Sauce Labs Onesie",
-                    "Zip": 3013
-                }
+            "Name": "Zoya Roche",
+            "Zip": 3013,
+            "Items": [
+                "Sauce Labs Bolt T-Shirt",
+                "Sauce Labs Fleece Jacket",
+                "Sauce Labs Onesie"
             ]
         },
         "files": {}
     },
     {
         "payload": {
-            "products": [
-                {
-                    "Name": "Sol Heaton",
-                    "Item": "Sauce Labs Bolt T-Shirt",
-                    "Zip": 3695
-                },
-                {
-                    "Name": "Sol Heaton",
-                    "Item": "Sauce Labs Fleece Jacket",
-                    "Zip": 3695
-                },
-                {
-                    "Name": "Sol Heaton",
-                    "Item": "Sauce Labs Onesee",
-                    "Zip": 3695
-                }
+            "Name": "Sol Heaton",
+            "Zip": 3695,
+            "Items": [
+                "Sauce Labs Bolt T-Shirt",
+                "Sauce Labs Fleece Jacket",
+                "Sauce Labs Onesee"
             ]
         },
         "files": {}
     },
     {
         "payload": {
-            "products": [
-                {
-                    "Name": "Gregg Arroyo",
-                    "Item": "Sauce Labs Onesie",
-                    "Zip": 4418
-                },
-                {
-                    "Name": "Gregg Arroyo",
-                    "Item": "Sauce Labs Bolt T-Shirt",
-                    "Zip": 4418
-                }
+            "Name": "Gregg Arroyo",
+            "Zip": 4418,
+            "Items": [
+                "Sauce Labs Onesie",
+                "Sauce Labs Bolt T-Shirt"
             ]
         },
         "files": {}
     },
     {
         "payload": {
-            "products": [
-                {
-                    "Name": "Camden Martin",
-                    "Item": "Sauce Labs Bolt T-Shirt",
-                    "Zip": 1196
-                }
+            "Name": "Camden Martin",
+            "Zip": 1196,
+            "Items": [
+                "Sauce Labs Bolt T-Shirt"
             ]
         },
         "files": {}

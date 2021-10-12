@@ -7,13 +7,14 @@ Resource          SwagLabs.robot
 Load and Process Order
     [Documentation]    Order all products in one work item products list
     ${payload}=    Get Work Item Payload
-    ${rows}=    Set Variable    ${payload}[products]
-    ${products}=    Create table    ${rows}
-    ${passed}   Run Keyword And Return Status    Process order    ${products}
+    ${name}=    Set Variable    ${payload}[Name]
+    ${zip}=    Set Variable    ${payload}[Zip]
+    ${items}=    Set Variable    ${payload}[Items]
+    ${passed}   Run Keyword And Return Status    Process order    ${name}    ${zip}    ${items}
     IF     ${passed}
         Release input work item    DONE
     ELSE
-        Log    Order prosessing failed for: ${rows}   level=ERROR
+        Log    Order prosessing failed for: ${name} zip: ${zip} items: ${items}   level=ERROR
         Release input work item    FAILED
     END
 

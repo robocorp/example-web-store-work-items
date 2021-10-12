@@ -20,16 +20,16 @@ Login
 
 *** Keywords ***
 Process order
-    [Arguments]    ${products}
+    [Arguments]    ${name}    ${zip}    ${items}
     Reset application state
     Open products page
     Assert cart is empty
-    FOR    ${product}    IN    @{products}
-        Wait Until Keyword Succeeds    3x    1s    Add product to cart    ${product}
+    FOR    ${item}    IN    @{items}
+        Wait Until Keyword Succeeds    3x    1s    Add product to cart    ${item}
     END
     Wait Until Keyword Succeeds    3x    1s    Open cart
     Capture page screenshot    ${OUTPUTDIR}/cart.png
-    Checkout    ${products[0]}
+    Checkout    ${name}    ${zip}
 
 *** Keywords ***
 Reset application state
@@ -42,8 +42,7 @@ Open products page
 
 *** Keywords ***
 Add product to cart
-    [Arguments]    ${order}
-    ${product_name}=    Set Variable    ${order["Item"]}
+    [Arguments]    ${product_name}
     ${locator}=    Set Variable    xpath://div[@class="inventory_item" and descendant::div[contains(text(), "${product_name}")]]
     ${product}=    Get WebElement    ${locator}
     ${add_to_cart_button}=    Set Variable    ${product.find_element_by_class_name("btn_primary")}
@@ -56,8 +55,7 @@ Open cart
 
 *** Keywords ***
 Checkout
-    [Arguments]    ${order}
-    ${name}  ${product}  ${zip}=    Set variable    ${order}
+    [Arguments]    ${name}    ${zip}
     Click Button    css:#checkout
     Assert checkout information page
     ${first_name}  ${last_name}=    Split string    ${name}

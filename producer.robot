@@ -2,6 +2,7 @@
 Library           RPA.Robocorp.WorkItems
 Library           RPA.Excel.Files
 Library           RPA.Tables
+Library            Collections
 
 *** Variables ***
 ${ORDER_FILE_NAME}=    orders.xlsx
@@ -16,6 +17,14 @@ Split orders file
     FOR    ${products}    IN    @{groups}
         Create Output Work Item
         ${rows}=    Export table    ${products}
-        Set work item variable    products    ${rows}
+        @{items}=    Create List
+        FOR    ${row}    IN    @{rows}
+            ${name}=    Set Variable     ${row}[Name]
+            ${zip}=    Set Variable     ${row}[Zip]
+            Append To List    ${items}   ${row}[Item]
+        END
+        Set work item variable    Name    ${name}
+        Set work item variable    Zip    ${zip}
+        Set work item variable    Items    ${items}
         Save Work Item
     END
