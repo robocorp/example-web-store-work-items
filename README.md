@@ -52,7 +52,7 @@ When running in **Control Room**, the work items will be automatically managed a
 ## VsCode
 [Robocorp VsCode extensions](https://robocorp.com/docs/developer-tools/visual-studio-code/overview) has built-in support making the use and testing of work items more straightforward.
 
-> Note: This requires the use of [rpaframework v11.3.0](https://rpaframework.org/releasenotes.html) or later in your robot.
+> Note: This requires the use of [rpaframework v11.4.0](https://rpaframework.org/releasenotes.html) or later in your robot.
 
 Using VsCode, you should only need [this guide](https://robocorp.com/docs/developer-tools/visual-studio-code/extension-features#using-work-items)
 
@@ -74,10 +74,9 @@ The `RPA.Robocorp.WorkItems` library can be controlled with specific environment
 
 To control the used environment file in the command-line or Robocorp Lab Terminal you can run the following commands:
 - Run `Split orders file` with test input:
-  - `rcc task run -t "Split orders file" -e .\devdata\env-split-orders.json`
+  - `rcc task run -t "Split orders file" -e ./devdata/env-split-orders.json`
 - Run `Load and Process All Orders` with test input:
-  - `rcc task run -t "Load and Process All Orders" -e .\devdata\env-process-orders.json`
-
+  - `rcc task run -t "Load and Process All Orders" -e ./devdata/env-process-orders.json`
 
 ## Control room setup
 
