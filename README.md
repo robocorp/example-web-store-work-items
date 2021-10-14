@@ -45,11 +45,12 @@ The first task expects an [Excel file](https://github.com/robocorp/example-web-s
 | Sol Heaton    | Sauce Labs Fleece Jacket | 3695 |
 | Sol Heaton    | Sauce Labs Onesee        | 3695 |
 
-# Local development
+
+## Local development
 
 When running in **Control Room**, the work items will be automatically managed and passed between steps in the process. However, when running locally, the work items can be simulated using folder structure and JSON files.
 
-## VsCode
+### VsCode
 [Robocorp VsCode extensions](https://robocorp.com/docs/developer-tools/visual-studio-code/overview) has built-in support making the use and testing of work items more straightforward.
 
 > Note: This requires the use of [rpaframework v11.4.0](https://rpaframework.org/releasenotes.html) or later in your robot.
@@ -57,7 +58,7 @@ When running in **Control Room**, the work items will be automatically managed a
 Using VsCode, you should only need [this guide](https://robocorp.com/docs/developer-tools/visual-studio-code/extension-features#using-work-items)
 
 
-## Robocorp Lab and RCC from CLI
+### Robocorp Lab and RCC from CLI
 
 As each task in the robot expects different work item input, we need a way to control this.
 
