@@ -1,5 +1,7 @@
 # Web store order processor: multiple work items example
 
+<img src="images/work-data-management.png" style="margin-bottom:20px">
+
 This robot splits orders by customer from an incoming Excel file. The orders are then handled individually and in parallel.
 
 The robot demonstrates the Work Items feature of Robocorp Control Room:
