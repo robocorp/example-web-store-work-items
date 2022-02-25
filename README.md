@@ -55,7 +55,7 @@ When running in **Control Room**, the work items will be automatically managed a
 
 [Robocorp VsCode extensions](https://robocorp.com/docs/developer-tools/visual-studio-code/overview) has built-in support making the use and testing of work items more straightforward.
 
-> Note: This requires the use of [rpaframework v11.4.0](https://rpaframework.org/releasenotes.html) or later in your robot.
+> Note: This requires the use of [rpaframework v12.8.1](https://rpaframework.org/releasenotes.html) or later in your robot.
 
 Using VsCode, you should only need [this guide](https://robocorp.com/docs/developer-tools/visual-studio-code/extension-features#using-work-items)
 
