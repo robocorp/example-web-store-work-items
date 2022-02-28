@@ -15,7 +15,6 @@ Split orders file
     ${table}=    Read Worksheet As Table    header=True
     ${groups}=    Group Table By Column    ${table}    Name
     FOR    ${products}    IN    @{groups}
-        Create Output Work Item
         ${rows}=    Export Table    ${products}
         @{items}=    Create List
         FOR    ${row}    IN    @{rows}
@@ -23,8 +22,9 @@ Split orders file
             ${zip}=    Set Variable    ${row}[Zip]
             Append To List    ${items}    ${row}[Item]
         END
-        Set Work Item Variable    Name    ${name}
-        Set Work Item Variable    Zip    ${zip}
-        Set Work Item Variable    Items    ${items}
-        Save Work Item
+        ${variables}=    Create Dictionary
+        ...    Name=${name}
+        ...    Zip=${zip}
+        ...    Items=${items}
+        Create Output Work Item    variables=${variables}    save=True
     END
