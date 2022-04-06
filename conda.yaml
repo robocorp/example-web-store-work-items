@@ -14,4 +14,4 @@ dependencies:
       # https://pypi.org/
 
       # https://rpaframework.org/releasenotes.html
-      - rpaframework==13.0.0
+      - rpaframework==13.0.3
