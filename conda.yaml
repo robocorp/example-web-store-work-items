@@ -7,11 +7,11 @@ dependencies:
   # If available, always prefer the conda version of a package.
   # Installation will be faster and more efficient.
   # https://anaconda.org/search
-  - python=3.7.5
+  - python=3.9.13
   - pip=20.1
   - pip:
       # Define pip packages here.
       # https://pypi.org/
 
       # https://rpaframework.org/releasenotes.html
-      - rpaframework==15.0.0
+      - rpaframework==15.4.0

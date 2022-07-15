@@ -7,9 +7,27 @@ Resource    SwagLabs.robot
 *** Tasks ***
 Load and Process All Orders
     [Documentation]    Order all products in input item queue
-    Open Swag Labs
-    Wait Until Keyword Succeeds    3x    1s    Login
-    For Each Input Work Item    Load and Process Order
+    [Setup]    Initialize Swag Labs
+    TRY
+        For Each Input Work Item    Load and Process Order
+    EXCEPT    AS    ${err}
+        # This is the general error handler that will release the error
+        # to the control room as received from the code.
+        #
+        # If this is called after a lower level error has already
+        # released the work item, the `Release input work item` keyword
+        # will fail, producing a non-continuable failure (but not necessarily
+        # a failure for the previously released work item). This failure will
+        # force this instance of the robot to close and the Control Room
+        # will start up a new run of the bot to continue processing other
+        # work items.
+        Log    ${err}    level=ERROR
+        Release input work item
+        ...    state=FAILED
+        ...    exception_type=APPLICATION
+        ...    code=UNCAUGHT_ERROR
+        ...    message=${err}
+    END
     [Teardown]    Close browser
 
 
@@ -23,10 +41,38 @@ Load and Process Order
     TRY
         Process order    ${name}    ${zip}    ${items}
         Release Input Work Item    DONE
-    EXCEPT
-        Log    Order prosessing failed for: ${name} zip: ${zip} items: ${items}    level=ERROR
-        Release Input Work Item
+    EXCEPT    Application cannot be reset
+    ...    *react-burger-menu-btn*is not clickable*    type=GLOB    AS    ${err}
+        # Catching different errors with search strings allows the robot to
+        # release them to CR with different error codes for easy sorting,
+        # troubleshooting, and retrying. Normally, you would try to
+        # program error handling into the bot so it could work through
+        # common errors encountered during execution.
+        Log    ${err}    level=ERROR
+        Release input work item
+        ...    state=FAILED
+        ...    exception_type=APPLICATION
+        ...    code=WEBSITE_UNRESPONSIVE
+        ...    message=${err}
+    EXCEPT    Shopping cart    type=START    AS    ${err}
+        Log    ${err}    level=ERROR
+        Release input work item
+        ...    state=FAILED
+        ...    exception_type=APPLICATION
+        ...    code=CART_NOT_EMPTY
+        ...    message=${err}
+    EXCEPT    *Add product to cart*failed*    type=GLOB    AS    ${err}
+        Log    ${err}    level=ERROR
+        Release input work item
         ...    state=FAILED
         ...    exception_type=BUSINESS
-        ...    message=Order prosessing failed for: ${name}
+        ...    code=ITEM_PROBLEM
+        ...    message=${err}
+    EXCEPT    Order invalid    AS    ${err}
+        Log    ${err}    level=ERROR
+        Release input work item
+        ...    state=FAILED
+        ...    exception_type=BUSINESS
+        ...    code=ORDER_INCOMPLETE
+        ...    message=${err}
     END
