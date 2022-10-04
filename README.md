@@ -56,6 +56,8 @@ The first task expects an [Excel file](https://github.com/robocorp/example-web-s
 | Sol Heaton    | Sauce Labs Fleece Jacket | 3695 |
 | Sol Heaton    | Sauce Labs Onesee        | 3695 |
 
+But, you can run this as a demo by supplying no item to the Control Room. The robot will use the default input used in testing.
+
 ## Local development
 
 When running in **Control Room**, the work items will be automatically managed and passed between steps in the process. However, when running locally, the work items can be simulated using folder structure and JSON files.
