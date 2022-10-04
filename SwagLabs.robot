@@ -6,8 +6,11 @@ Library     RPA.Robocorp.WorkItems
 
 *** Variables ***
 ${SWAG_LABS_URL}=           https://www.saucedemo.com
+# Username and password should be stored in the Control Room Vault normally.
 ${SWAG_LABS_USER}=          standard_user
 ${SWAG_LABS_PASSWORD}=      secret_sauce
+# Used to turn on mocked demo failures if set in the robot.yaml
+${FAIL}=                    ${False}
 
 
 *** Keywords ***
@@ -74,8 +77,7 @@ Add product to cart
     [Arguments]    ${product_name}
     ${locator}=    Set Variable
     ...    xpath://div[@class="inventory_item" and descendant::div[contains(text(), "${product_name}")]]
-    ${product}=    Get WebElement    ${locator}
-    ${add_to_cart_button}=    Set Variable    ${product.find_element_by_class_name("btn_primary")}
+    ${add_to_cart_button}=    Get WebElement    ${locator} >> class:btn_primary
     Click Button    ${add_to_cart_button}
 
 Open cart
@@ -133,13 +135,20 @@ Assert checkout complete page
     Location Should Be    ${SWAG_LABS_URL}/checkout-complete.html
 
 Induce random error
-    [Documentation]    Causes a random error returning the provided message.
+    [Documentation]
+    ...    Causes a random error returning the provided message if the
+    ...    global variable `FAIL` is set to `True`.
+    ...
     ...    NOTE: This keyword should not be used in a production system.
     [Arguments]    ${failure_chance}=${0.2}    ${message}=Random failure
-    IF    ${failure_chance} >= 1 or ${failure_chance} <= 0
-        Log    Invalid failure_chance, resetting to default of 0.2.    level=WARN
-        ${failure_chance}=    Set variable    ${0.2}
+    IF    ${FAIL}
+        IF    ${failure_chance} >= 1 or ${failure_chance} <= 0
+            Log    Invalid failure_chance, resetting to default of 0.2.    level=WARN
+            ${failure_chance}=    Set variable    ${0.2}
+        END
+        ${failures}=    Evaluate    round(${failure_chance} * 100)
+        ${roll}=    Evaluate    random.randint(1,100)
+        IF    ${roll} <= ${failures}    Fail    ${message}
+    ELSE
+        Log    Mocked errors are turned off.
     END
-    ${failures}=    Evaluate    round(${failure_chance} * 100)
-    ${roll}=    Evaluate    random.randint(1,100)
-    IF    ${roll} <= ${failures}    Fail    ${message}

@@ -2,19 +2,20 @@
 
 <img src="images/work-data-management.png" style="margin-bottom:20px">
 
-This robot splits orders by customer from an incoming Excel file. The orders are then handled individually and in parallel.
+This robot splits orders by customer from an incoming Excel file. The orders are then handled individually and in parallel. It includes a second version of the consumer task which produces errors, which can be used to demonstrate how the Control Room receives errors from bots.
 
 The robot demonstrates the Work Items feature of Robocorp Control Room:
 
 - Triggering a process with custom payloads (input)
 - Passing data and files between process steps
 - Parallel execution of steps
+- Robot and Control Room [exception handling](https://robocorp.com/docs/development-guide/control-room/work-items#work-item-exception-handling)
 
 > We recommended checking out the article "[Using work items](https://robocorp.com/docs/development-guide/control-room/data-pipeline)" before diving in.
 
 ## Tasks
 
-The robot is split into two tasks, meant to run as separate steps. The first task generates (produces) data, and the second one reads (consumes) and processes that data.
+The robot is split into two tasks, meant to run as separate steps. The first task generates (produces) data, and the second one reads (consumes) and processes that data. A bonus task exists which can be used to mock Control Room and Robot error handling.
 
 > [Producer-consumer](https://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem), Wikipedia.
 
@@ -31,6 +32,14 @@ The robot is split into two tasks, meant to run as separate steps. The first tas
   - Loops through work items to avoid time spent logging in per each work item.
 - Orders the products
 
+### The bonus task (error mocking)
+
+- Produces errors during the same actions as the consumer.
+  - Some error will be retried by the bot internally.
+  - Some errors will cause the run to fail after work items are already released (therefore the work item will still complete).
+  - Some errors will be reported at the Control Room level with appropriate codes and messages.
+- You can automatically retry errors with the [Retry Bot in the Portal](https://robocorp.com/portal/robot/robocorp/example-retry-work-item-bot).
+
 ## Excel input file
 
 The first task expects an [Excel file](https://github.com/robocorp/example-web-store-work-items/raw/master/devdata/work-items-in/split-orders-file-test-input/orders.xlsx) in a specific format:
@@ -46,6 +55,8 @@ The first task expects an [Excel file](https://github.com/robocorp/example-web-s
 | Zoya Roche    | Sauce Labs Onesie        | 3013 |
 | Sol Heaton    | Sauce Labs Fleece Jacket | 3695 |
 | Sol Heaton    | Sauce Labs Onesee        | 3695 |
+
+But, you can run this as a demo by supplying no item to the Control Room. The robot will use the default input used in testing and linked above.
 
 ## Local development
 

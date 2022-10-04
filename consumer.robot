@@ -34,10 +34,10 @@ Load and Process All Orders
 *** Keywords ***
 Load and Process Order
     [Documentation]    Order all products in one work item products list
-    ${payload}=    Get Work Item Payload
-    ${name}=    Set Variable    ${payload}[Name]
-    ${zip}=    Set Variable    ${payload}[Zip]
-    ${items}=    Set Variable    ${payload}[Items]
+    ${work_item}=    Get work item variables
+    ${name}=    Set Variable    ${work_item}[Name]
+    ${zip}=    Set Variable    ${work_item}[Zip]
+    ${items}=    Set Variable    ${work_item}[Items]
     TRY
         Process order    ${name}    ${zip}    ${items}
         Release Input Work Item    DONE
@@ -63,11 +63,17 @@ Load and Process Order
         ...    message=${err}
     EXCEPT    *Add product to cart*failed*    type=GLOB    AS    ${err}
         Log    ${err}    level=ERROR
+        # You can manipulate the error to
+        # extract relevant information.
+        ${item_causing_problem}=    Get regexp matches    ${err}    .*text\\(\\), "([\\w\\s]+)"    1
+        ${message}=    Catenate
+        ...    The requested item '${item_causing_problem}[0]' could not be added to the cart.
+        ...    Check spelling and consider trying again.
         Release input work item
         ...    state=FAILED
         ...    exception_type=BUSINESS
         ...    code=ITEM_PROBLEM
-        ...    message=${err}
+        ...    message=${message}
     EXCEPT    Order invalid    AS    ${err}
         Log    ${err}    level=ERROR
         Release input work item
