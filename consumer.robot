@@ -34,10 +34,10 @@ Load and Process All Orders
 *** Keywords ***
 Load and Process Order
     [Documentation]    Order all products in one work item products list
-    ${payload}=    Get Work Item Payload
-    ${name}=    Set Variable    ${payload}[Name]
-    ${zip}=    Set Variable    ${payload}[Zip]
-    ${items}=    Set Variable    ${payload}[Items]
+    ${work_item}=    Get work item variables
+    ${name}=    Set Variable    ${work_item}[Name]
+    ${zip}=    Set Variable    ${work_item}[Zip]
+    ${items}=    Set Variable    ${work_item}[Items]
     TRY
         Process order    ${name}    ${zip}    ${items}
         Release Input Work Item    DONE
