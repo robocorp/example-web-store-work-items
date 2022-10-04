@@ -56,7 +56,7 @@ The first task expects an [Excel file](https://github.com/robocorp/example-web-s
 | Sol Heaton    | Sauce Labs Fleece Jacket | 3695 |
 | Sol Heaton    | Sauce Labs Onesee        | 3695 |
 
-But, you can run this as a demo by supplying no item to the Control Room. The robot will use the default input used in testing.
+But, you can run this as a demo by supplying no item to the Control Room. The robot will use the default input used in testing and linked above.
 
 ## Local development
 
