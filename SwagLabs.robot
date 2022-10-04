@@ -77,8 +77,7 @@ Add product to cart
     [Arguments]    ${product_name}
     ${locator}=    Set Variable
     ...    xpath://div[@class="inventory_item" and descendant::div[contains(text(), "${product_name}")]]
-    ${product}=    Get WebElement    ${locator}
-    ${add_to_cart_button}=    Set Variable    ${product.find_element_by_class_name("btn_primary")}
+    ${add_to_cart_button}=    Get WebElement    ${locator} >> class:btn_primary
     Click Button    ${add_to_cart_button}
 
 Open cart
